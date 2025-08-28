@@ -1,26 +1,36 @@
-//
-function calcular(n1, n2, operador) {
-  switch (operador) {
-    case "+":
-      return n1 + n2;
-    case "-":
-      return n1 - n2;
-    case "*":
-      return n1 * n2;
-    case "/":
-      return n2 !== 0 ? n1 / n2 : "Erro: divisão por zero";
-    default:
-      return "Operador inválido";
+function soma(a, b) {
+    return a + b;
   }
-}
+  
+function subtrai(a, b) {
+    return a - b;
+  }
+  
+function multiplica(a, b) {
+    return a * b;
+  }
+  
+function dividir(a, b) {
+    if (b === 0) {
+      throw new Error("Proibido dividir por zero");
+    }
+    return a / b;
+  }
+  
+function aoQuadrado(a) {
+    return a * a;
+  }
+  
+function raizQuadrada(a) {
+    if (a < 0) {
+      throw new Error("proibido raiz quadrada de número negativo");
+    }
+    return Math.sqrt(a);
+  }
+  
+module.exports = { soma, subtrai, multiplica, dividir, aoQuadrado, raizQuadrada };
 
-const n1 = parseFloat(process.argv[2]);
-const operador = process.argv[3];
-const n2 = parseFloat(process.argv[4]);
 
-if (isNaN(n1) || isNaN(n2) || !operador) {
-  console.log("Uso: node calculadora.js <num1> <operador> <num2>");
-  console.log("Exemplo: node calculadora.js 10 + 5");
-} else {
-  console.log(`Resultado: ${calcular(n1, n2, operador)}`);
-}
+
+
+
