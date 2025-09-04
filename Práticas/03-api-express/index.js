@@ -26,13 +26,13 @@ app.get('/pessoas', (req, res, next) => {
     const pessoas = [
         {
             id: 1,
-            nome: "João"
-            idade: "20"
+            nome: "João",
+            idade: "20",
         },
         {
             id: 2,
-            nome: "Pedro"
-            idade: "22"
+            nome: "Pedro",
+            idade: "22",
         },
     ]
     res.send("TESTE TESTANDO 123!")
