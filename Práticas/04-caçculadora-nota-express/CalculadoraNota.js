@@ -57,6 +57,7 @@ router.get('/notaA2', (req, res,next) => {
 router.get("/media", (req, res,next) => {
     const notaA1  = parseFloat(req.query.notaA1)
     const notaA2  = parseFloat(req.query.notaA2)
+})
 
 // valido se os parametros são numeros
     if (isNaN(notaA1) || isNaN(notaA2)) {
