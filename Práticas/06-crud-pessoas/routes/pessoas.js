@@ -90,7 +90,10 @@ router.put('/pessoas/:id', (req, res, next) => {
 
 // #Remoção
 // DELETE /pessoas/:id
-
+router.delete('/pessoas/:id', (rec, res, next) => {
+    const id = req.params.id// validar se a pessoa  não existe
+    
+})
 
 // exportar o roteador
 module.exports = router
