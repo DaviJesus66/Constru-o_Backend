@@ -51,5 +51,8 @@ router.post('/alunos', (req, res, nest) =>{
     }
     listeAlunos.push(novoAluno)
     res.status(201).json({
-        massage: "Aluno cadastrada com sucesso", novoAluno})
+        massage: "Aluno cadastrado com sucesso", novoAluno})
 })
+
+// exportar o roteador
+module.exports = router
