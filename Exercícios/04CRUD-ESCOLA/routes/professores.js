@@ -8,6 +8,9 @@ let listaprofessores = [
     nome: "Ppedro",
     cpf: "00100100101",
     email: "joão@pedro.com",
+    telefone: "61983634363",
+    curso: "Matemática",
+    disciplina: "Ciencias contábeis",
     dataNascimento: "03/09/1981"
   },
   {
@@ -15,6 +18,8 @@ let listaprofessores = [
     nome: "Joanna",
     cpf: "00200200202",
     email: "maria@joana.com",
+    curso: "Português",
+    disciplina: "Uso das vogais",
     dataNascimento: "04/03/1990"
   },
 ]
@@ -34,8 +39,8 @@ router.get('/professores/:id', (req, res, nest,) =>{
 
 router.post('/professores', (req, res, nest) =>{
     const {nome, cpf, email, dataNacimento} = req.body
-    if(!nome|| !cpf|| !email|| !dataNacimento){
-        return res.status(400).json({error: "Nome , CPF, Email E DataNacimento SÃO OBRIGATORIOS!!!"})
+    if(!nome|| !cpf|| !email|| !curso|| !disciplina|| !dataNacimento){
+        return res.status(400).json({error: "Nome , CPF, Email, Curso, Disciplina e DataNacimento SÃO OBRIGATORIOS!!!"})
     }
     if(listaprofessores.some(professores => professores.cpf == cpf)){
         return res.status(409).json({error: "Este CPF Ja Esta Cadastrado!!!"})
@@ -46,6 +51,8 @@ router.post('/professores', (req, res, nest) =>{
         nome,
         cpf,
         email,
+        curso,
+        disciplina,
         dataNacimento
     }
     listaprofessores.push(novoProfessor)
@@ -60,13 +67,15 @@ router.put('/professores/:id', (req, res, next) => {
         return res.status(404).json({ error: "Professor não encontrado!!!"})
     }
 
-    const { nome, email, dataNascimento } = req.body
-     if(!nome || !email || !dataNascimento){
-    return res.status(400).json({ error: "Nome, email e DataNascimento são obrigatórios!!!"})
+    const { nome, email, curso, disciplina, dataNascimento } = req.body
+     if(!nome|| !cpf|| !email|| !curso|| !disciplina|| !dataNacimento){
+    return res.status(400).json({ error: "Nome, email curso, disciplina e DataNascimento são obrigatórios!!!"})
     }
 
     professores.nome = nome
     professores.email = email
+    professores.curso = curso
+    professores.disciplina = disciplina
     professores.dataNascimento = dataNascimento
     res.json({message: "Professor atualizado com sucesso!!!"})
 })

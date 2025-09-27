@@ -9,6 +9,7 @@ let listeAlunos = [
         nome: "Fernando",
         cpf : "12345678901",
         email : "fernando@aluno.com",
+        telefone : "62983648547",
         dataNacimento: "01/02/2000"
     },
     {
@@ -16,6 +17,7 @@ let listeAlunos = [
         nome: "Gabriela",
         cpf: "012345678902",
         email: "gabriela@aluno.com",
+        telefone: "61938463638",
         dataNacimento: "07/05/2002"
     },
 ]
@@ -35,8 +37,8 @@ router.get('/alunos/:id', (req, res, nest,) =>{
 
 router.post('/alunos', (req, res, nest) =>{
     const {nome, cpf, email, dataNacimento} = req.body
-    if(!nome|| !cpf|| !email|| !dataNacimento){
-        return res.status(400).json({error: "Nome , CPF, Email E DataNacimento SÃO OBRIGATORIOS!!!"})
+    if(!nome|| !cpf|| !telefone|| !email|| !dataNacimento){
+        return res.status(400).json({error: "Nome , CPF, Email, Telefone e DataNacimento SÃO OBRIGATORIOS!!!"})
     }
     if(listeAlunos.some(alunos => alunos.cpf == cpf)){
         return res.status(409).json({error: "Este CPF Ja Esta Cadastrado!!!"})
@@ -47,6 +49,7 @@ router.post('/alunos', (req, res, nest) =>{
         nome,
         cpf,
         email,
+        telefone,
         dataNacimento
     }
     listeAlunos.push(novoAluno)
