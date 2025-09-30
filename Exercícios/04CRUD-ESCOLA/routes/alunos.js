@@ -57,5 +57,28 @@ router.post('/alunos', (req, res, nest) =>{
         massage: "Aluno cadastrado com sucesso", novoAluno})
 })
 
+router.put('/alunos/:id', (req, res, next) => {
+    const id = req.params.id
+    const alunos = listeAlunos.find(alunos => alunos.id == id)
+    if(!alunos){
+        return res.status(404).json({ error: "Aluno não encontrado!!!"})
+    }
+
+    const { nome, email, curso, disciplina, dataNascimento } = req.body
+     if(!nome|| !cpf|| !telefone|| !email|| !dataNacimento){
+    return res.status(400).json({ error: "Nome, CPF, email, Telefone e DataNascimento são obrigatórios!!!"})
+    }
+
+    alunos.nome = nome
+    alunos.email = email
+    alunos.dataNascimento = dataNascimento
+    res.json({message: "Aluno atualizado com sucesso!!!"})
+})
+
+router.delete('/alunos/:id', (rec, res, next) => {
+    const id = req.params.id
+    
+})
+
 // exportar o roteador
 module.exports = router
