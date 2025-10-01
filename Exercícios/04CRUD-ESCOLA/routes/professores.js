@@ -30,7 +30,7 @@ router.get('/professores', (req, res, nest)=>{
 
 router.get('/professores/:id', (req, res, nest,) =>{
     const id = req.params.id
-    const professores = listaprofessores.find(professores = professores.id == id)
+    const professor = listaprofessores.find(prof => prof.id == id)
     if(!professores){
         return res.status(404).json({error: "Professor nao encontrado!!"})
     }
@@ -38,8 +38,9 @@ router.get('/professores/:id', (req, res, nest,) =>{
 })
 
 router.post('/professores', (req, res, nest) =>{
-    const {nome, cpf, email, dataNacimento} = req.body
-    if(!nome|| !cpf|| !email|| !curso|| !disciplina|| !dataNacimento){
+    const { nome, cpf, email, curso, disciplina, dataNascimento } = req.body
+    if(!nome || !cpf || !email || !curso || !disciplina || !dataNascimento){
+
         return res.status(400).json({error: "Nome , CPF, Email, Curso, Disciplina e DataNacimento SÃO OBRIGATORIOS!!!"})
     }
     if(listaprofessores.some(professores => professores.cpf == cpf)){
@@ -47,7 +48,7 @@ router.post('/professores', (req, res, nest) =>{
     }
 
     const novoProfessor = {
-        id: Date.new(),
+        id: Date.now(),
         nome,
         cpf,
         email,
@@ -68,7 +69,7 @@ router.put('/professores/:id', (req, res, next) => {
     }
 
     const { nome, email, curso, disciplina, dataNascimento } = req.body
-     if(!nome|| !cpf|| !email|| !curso|| !disciplina|| !dataNacimento){
+     if(!nome || !email || !curso || !disciplina || !dataNascimento){
     return res.status(400).json({ error: "Nome, email curso, disciplina e DataNascimento são obrigatórios!!!"})
     }
 
@@ -80,9 +81,16 @@ router.put('/professores/:id', (req, res, next) => {
     res.json({message: "Professor atualizado com sucesso!!!"})
 })
 
-router.delete('/professores/:id', (rec, res, next) => {
+router.delete('/professores/:id', (req, res) => {
     const id = req.params.id
+    const index = listaprofessores.findIndex(prof => prof.id == id)
     
+    if(index === -1){
+        return res.status(404).json({ error: "Professor não encontrado!!!"})
+    }
+
+    listaprofessores.splice(index, 1)
+    res.json({ message: "Professor deletado com sucesso!!!"})
 })
 
 // exportar o roteador
