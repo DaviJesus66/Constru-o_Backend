@@ -36,7 +36,7 @@ router.get('/alunos/:id', (req, res, nest,) =>{
 })
 
 router.post('/alunos', (req, res, nest) =>{
-    const {nome, cpf, email, dataNacimento} = req.body
+    const {nome, cpf, email, dataNacimento, telefone} = req.body
     if(!nome|| !cpf|| !telefone|| !email|| !dataNacimento){
         return res.status(400).json({error: "Nome , CPF, Email, Telefone e DataNacimento SÃO OBRIGATORIOS!!!"})
     }
@@ -64,20 +64,23 @@ router.put('/alunos/:id', (req, res, next) => {
         return res.status(404).json({ error: "Aluno não encontrado!!!"})
     }
 
-    const { nome, email, curso, disciplina, dataNascimento } = req.body
-     if(!nome|| !cpf|| !telefone|| !email|| !dataNacimento){
+    const { nome, email, dataNascimento, telefone, cpf} = req.body
+     if(!nome|| !cpf|| !telefone|| !email|| !dataNascimento){
     return res.status(400).json({ error: "Nome, CPF, email, Telefone e DataNascimento são obrigatórios!!!"})
     }
 
     alunos.nome = nome
     alunos.email = email
-    alunos.dataNascimento = dataNascimento
+    alunos.dataNacimento = dataNascimento
+    alunos.telefone = telefone
+    alunos.cpf = cpf
     res.json({message: "Aluno atualizado com sucesso!!!"})
 })
 
-router.delete('/alunos/:id', (rec, res, next) => {
+router.delete('/alunos/:id', (req, res, next) => {
     const id = req.params.id
-    
+    alunos = alunos.filter(alunos => alunos != id)
+    res.json({message:"Aluno Excluido Com Sucesso!!!"})
 })
 
 // exportar o roteador
