@@ -22,20 +22,20 @@ let listeAlunos = [
     },
 ]
 
-router.get('/alunos', (req, res, nest)=>{
+router.get('/alunos', (req, res, next)=>{
     res.json(listeAlunos)
 })
 
-router.get('/alunos/:id', (req, res, nest,) =>{
+router.get('/alunos/:id', (req, res, next,) =>{
     const id = req.params.id
-    const alunos = listeAlunos.find(alunos = alunos.id == id)
+    const alunos = listeAlunos.find(alunos => alunos.id == id)
     if(!alunos){
         return res.status(404).json({error: "Aluno nao encontrado!!"})
     }
     res.json(alunos)
 })
 
-router.post('/alunos', (req, res, nest) =>{
+router.post('/alunos', (req, res, next) =>{
     const {nome, cpf, email, dataNacimento, telefone} = req.body
     if(!nome|| !cpf|| !telefone|| !email|| !dataNacimento){
         return res.status(400).json({error: "Nome , CPF, Email, Telefone e DataNacimento SÃO OBRIGATORIOS!!!"})
@@ -45,7 +45,7 @@ router.post('/alunos', (req, res, nest) =>{
     }
 
     const novoAluno = {
-        id: Date.new(),
+        id: Date.now(),
         nome,
         cpf,
         email,
@@ -79,7 +79,7 @@ router.put('/alunos/:id', (req, res, next) => {
 
 router.delete('/alunos/:id', (req, res, next) => {
     const id = req.params.id
-    alunos = alunos.filter(alunos => alunos != id)
+    listeAlunos = listeAlunos.filter(alunos => alunos != id)
     res.json({message:"Aluno Excluido Com Sucesso!!!"})
 })
 
