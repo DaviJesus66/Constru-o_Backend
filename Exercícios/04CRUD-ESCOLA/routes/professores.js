@@ -30,7 +30,7 @@ router.get('/professores', (req, res, nest)=>{
 
 router.get('/professores/:id', (req, res, nest,) =>{
     const id = req.params.id
-    const professores = listaprofessores.find(professores = professores.id == id)
+    const professor = listaprofessores.find(prof => prof.id == id)
     if(!professores){
         return res.status(404).json({error: "Professor nao encontrado!!"})
     }
@@ -38,8 +38,14 @@ router.get('/professores/:id', (req, res, nest,) =>{
 })
 
 router.post('/professores', (req, res, nest) =>{
+<<<<<<< HEAD
+    const { nome, cpf, email, curso, disciplina, dataNascimento } = req.body
+    if(!nome || !cpf || !email || !curso || !disciplina || !dataNascimento){
+
+=======}
     const {nome, cpf, email, dataNacimento, curso, disciplina} = req.body
     if(!nome|| !cpf|| !email|| !curso|| !disciplina|| !dataNacimento){
+>>>>>>> f1667d93bc365bfee4e99ded4884d72cde53609f
         return res.status(400).json({error: "Nome , CPF, Email, Curso, Disciplina e DataNacimento SÃO OBRIGATORIOS!!!"})
     }
     if(listaprofessores.some(professores => professores.cpf == cpf)){
@@ -47,7 +53,7 @@ router.post('/professores', (req, res, nest) =>{
     }
 
     const novoProfessor = {
-        id: Date.new(),
+        id: Date.now(),
         nome,
         cpf,
         email,
@@ -67,9 +73,15 @@ router.put('/professores/:id', (req, res, next) => {
         return res.status(404).json({ error: "Professor não encontrado!!!"})
     }
 
+<<<<<<< HEAD
+    const { nome, email, curso, disciplina, dataNascimento } = req.body
+     if(!nome || !email || !curso || !disciplina || !dataNascimento){
+    return res.status(400).json({ error: "Nome, email curso, disciplina e DataNascimento são obrigatórios!!!"})
+=======}
     const { nome, email, curso, disciplina, dataNascimento, cpf } = req.body
      if(!nome|| !cpf|| !email|| !curso|| !disciplina|| !dataNascimento){
     return res.status(400).json({ error: "Nome, email, curso, Cpf, disciplina e DataNascimento são obrigatórios!!!"})
+>>>>>>> f1667d93bc365bfee4e99ded4884d72cde53609f
     }
 
     professores.nome = nome
@@ -81,11 +93,23 @@ router.put('/professores/:id', (req, res, next) => {
     res.json({message: "Professor atualizado com sucesso!!!"})
 })
 
+<<<<<<< HEAD
+router.delete('/professores/:id', (req, res) => {
+    const id = req.params.id
+    const index = listaprofessores.findIndex(prof => prof.id == id)
+=======}
 router.delete('/professores/:id', (req, res, next) => {
     const id = req.params.id
     professores = professores.filter(professores = professores != id)
     res.json({message: "Professor Excluido com Sucesso!!!"})
-    
+>>>>>>> f1667d93bc365bfee4e99ded4884d72cde53609f
+}
+    if(index === -1){
+        return res.status(404).json({ error: "Professor não encontrado!!!"})
+    }
+
+    listaprofessores.splice(index, 1)
+    res.json({ message: "Professor deletado com sucesso!!!"})
 })
 
 // exportar o roteador
