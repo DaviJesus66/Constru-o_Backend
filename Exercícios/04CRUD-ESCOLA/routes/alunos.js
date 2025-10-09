@@ -59,21 +59,21 @@ router.post('/alunos', (req, res, next) =>{
 
 router.put('/alunos/:id', (req, res, next) => {
     const id = req.params.id
-    const alunos = listeAlunos.find(alunos => alunos.id == id)
-    if(!alunos){
+    const aluno = listeAlunos.find(alunos => alunos.id == id)
+    if(!aluno){
         return res.status(404).json({ error: "Aluno não encontrado!!!"})
     }
 
-    const { nome, email, dataNascimento, telefone, cpf} = req.body
-     if(!nome|| !cpf|| !telefone|| !email|| !dataNascimento){
+    const { nome, email, dataNacimento, telefone, cpf} = req.body
+     if(!nome|| !cpf|| !telefone|| !email|| !dataNacimento){
     return res.status(400).json({ error: "Nome, CPF, email, Telefone e DataNascimento são obrigatórios!!!"})
     }
 
-    alunos.nome = nome
-    alunos.email = email
-    alunos.dataNacimento = dataNascimento
-    alunos.telefone = telefone
-    alunos.cpf = cpf
+    aluno.nome = nome
+    aluno.email = email
+    aluno.dataNacimento = dataNacimento
+    aluno.telefone = telefone
+    aluno.cpf = cpf
     res.json({message: "Aluno atualizado com sucesso!!!"})
 })
 
