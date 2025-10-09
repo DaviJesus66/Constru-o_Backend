@@ -6,7 +6,7 @@ const app = express();
 
 app.use(express.json());
 
-// conectar no banco mongo
+// conectar no banco mongo//
 
 mongoose.connect('mongodb+srv://Davvisj:<db_password>@cluster0.hgjgzrq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => {
