@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require ('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
@@ -8,7 +8,7 @@ app.use(express.json());
 
 // conectar no banco mongo//
 
-mongoose.connect('mongodb+srv://Davvisj:<db_password>@cluster0.hgjgzrq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://Davvisj:43sJJnGw3Ub7UqPs@cluster0.hgjgzrq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
     .then(() => {
         console.log('Conectado ao MongoDB')
     })
