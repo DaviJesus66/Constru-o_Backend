@@ -1,6 +1,6 @@
 const express = require ('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config();
 
 const app = express();
 
@@ -21,8 +21,25 @@ mongoose.connect(url)
     .catch((error) => {
         console.error('Erro ao conectar ao MongoDB:', error)
     })
+//interface com o banco de dados - model
+//cada model(Modelo) representa uma Collection(tabela)
+const TarefaModel = mongoose.model('tarefas', new mongoose.Schema(
+    {
+        nome: String
+    }
+))
 
+//crud
 
+//create
+app.post('/tarefas', async (req, res) => {
+    const tarefa = req.body;
+    if (!tarefa.nome) {
+        return res.status(400).json({ error: 'Nome é obrigatório' });
+    }
+    const tarefaCriada = await TarefaModel.create(tarefa)
+    res.status(201).json(tarefaCriada)
+})
 
 app.listen(3000, () => {
     console.log('Servidor rodando em http://localhost:3000')
