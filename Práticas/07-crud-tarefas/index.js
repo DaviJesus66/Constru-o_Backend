@@ -23,7 +23,7 @@ mongoose.connect(url)
     })
 //interface com o banco de dados - model
 //cada model(Modelo) representa uma Collection(tabela)
-const TarefaModel = mongoose.model('tarefas', new mongoose.Schema(
+const LivroModel = mongoose.model('livros', new mongoose.Schema(
     {
         nome: String
     }
@@ -32,42 +32,42 @@ const TarefaModel = mongoose.model('tarefas', new mongoose.Schema(
 //crud
 
 //create
-app.post('/tarefas', async (req, res, next) => {
-    const tarefa = req.body;
-    if (!tarefa.nome) {
+app.post('/livros', async (req, res, next) => {
+    const livro = req.body;
+    if (!livro.nome) {
         return res.status(400).json({ error: 'Nome é obrigatório' });
     }
-    const tarefaCriada = await TarefaModel.create(tarefa)
-    res.status(201).json(tarefaCriada)
+    const livroCriado = await livrosModel.create(livro)
+    res.status(201).json(livroCriada)
 })
 
 //read
-app.get('/tarefas', async (req, res, next) => {
-    const tarefas = await TarefaModel.find()
-    res.json(tarefas)
+app.get('/livros', async (req, res, next) => {
+    const livros = await livroModel.find()
+    res.json(livros)
 })
 
 //update
-app.put('/tarefas/:id', async (req, res, next) => {
+app.put('/livros/:id', async (req, res, next) => {
     const id = req.params;
-    const tarefa = req.body;
-    if (!tarefa.nome) {
+    const livro = req.body;
+    if (!livro.nome) {
         return res.status(400).json({ error: 'Nome é obrigatório' });
     }
-    const tarefaAtualizada = await TarefaModel.findByIdAndUpdate(id, tarefa, { new: true })
+    const livroAtualizada = await livroModel.findByIdAndUpdate(id, livro, { new: true })
     
-    if (!tarefaAtualizada) {
-        return res.status(404).json({ error: 'Tarefa não encontrada' });
+    if (!livroAtualizada) {
+        return res.status(404).json({ error: 'Livro não encontrado' });
     }
 
-    res.json(tarefaAtualizada)
+    res.json(livroAtualizada)
 })
 
 //delete
-app.delete('/tarefas/:id', async (req, res, next) => {
+app.delete('/livros/:id', async (req, res, next) => {
     const id = req.params.id
-    await TarefaModel.findByIdAndDelete(id)
-    res.json({ message: 'Tarefa deletada com sucesso' })
+    await livroModel.findByIdAndDelete(id)
+    res.json({ message: 'livro deletad com sucesso' })
 })
 
 //start
