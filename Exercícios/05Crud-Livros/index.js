@@ -29,6 +29,14 @@ const LivroModel = mongoose.model('livros', new mongoose.Schema(
     }
 ))
 
+////
+const livroSchema = new mongoose.Schema({
+  titulo: { type: String, required: true },
+  autor: { type: String, required: true },
+  editora: String,
+  ano: Number,
+  preco: Number
+});
 //crud
 
 //create
