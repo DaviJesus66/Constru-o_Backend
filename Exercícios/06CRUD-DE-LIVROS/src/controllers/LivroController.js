@@ -8,7 +8,7 @@ const { validarID } = require('../validators/IDValidator')
 
 // Rotas do CRUD
 //create
-app.post('/livros', async (req, res, next) => {
+router.post('/livros', async (req, res, next) => {
     const livro = req.body;
     if (!livro.nome) {
         return res.status(400).json({ error: 'Nome é obrigatório' });
@@ -18,7 +18,7 @@ app.post('/livros', async (req, res, next) => {
 })
 
 //read
-app.get('/livros', async (req, res, next) => {
+router.get('/livros', async (req, res, next) => {
   try {
     const livros = await livroModel.find();
     res.status(200).json(livros);
@@ -29,7 +29,7 @@ app.get('/livros', async (req, res, next) => {
 
 
 //Buscar
-app.get('/livros/:id', async (req, res) => {
+router.get('/livros/:id', async (req, res) => {
   try {
     const livro = await Livro.findById(req.params.id);
     if (!livro) {
@@ -42,7 +42,7 @@ app.get('/livros/:id', async (req, res) => {
 });
 
 //update
-app.put('/livros/:id', async (req, res, next) => {
+router.put('/livros/:id', async (req, res, next) => {
     const id = req.params;
     const livro = req.body;
     if (!livro.nome) {
@@ -58,7 +58,7 @@ app.put('/livros/:id', async (req, res, next) => {
 })
 
 //delete
-app.delete('/livros/:id', async (req, res, next) => {
+router.delete('/livros/:id', async (req, res, next) => {
     const id = req.params.id
     await livroModel.findByIdAndDelete(id)
     res.json({ message: 'livro deletad com sucesso' })
