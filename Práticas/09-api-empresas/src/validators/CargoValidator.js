@@ -1,22 +1,24 @@
 const yup = require('yup')
 
-const shema = yup.object().shape(
-    {
-        nome: yup.srtring().required("Ocampo nome é obrigatório"),
-        descrição: yup.string().required("O campo descrição é obrigatório"),
-        salário: yup.number()
-        .min(1.518,00 "Salário não pode ser abaico de mínimo 1518.00")
-        .required("O campo salário é obrigatório")
-    }
+const schema = yup.object().shape(
+  {
+    nome: yup.string().required("O campo nome é obrigatório"),
+    descricao: yup.string().required("O campo descricao é obrigatório"),
+    salario: yup.number()
+      .min(1518.00, "salario não pode ser abaixo do minimo 1518.00")
+      .required("O campo salario é obrigatório")
+  }
 )
 
-async function validarcargo(req, res, next) {
-    try {
-        await shema.validate(req.body, { abortEarly: false })
-        next()
-    } catch (err) {
-        return res.status(400).json({ errors: err.errors })
-    }
+async function validarCargo(req, res, next) {
+  try {
+    await schema.validate(req.body, { abortEarly: false })
+    next()
+  } catch (error) {
+    return res.status(400).json({ erro: error.errors })
+  }
 }
 
-module.exports = {validarCargo}
+module.exports = {
+  validarCargo
+}

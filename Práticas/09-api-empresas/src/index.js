@@ -22,8 +22,13 @@ mongoose.connect(url)
     console.log("Erro ao conectar no banco MongoDB: ", err)
   })
 
-// controladores e rotas
+// rotas(controllers)
+const CargoController = require('./controllers/CargoController')
+app.use(CargoController)
+
+const DepartamentoController = require('./controllers/DepartamentoController')
+app.use(DepartamentoController)
 
 app.listen(3000, () => {
-  console.log("Aplicação rodando em http://localhost:3000")
+  console.log("API-EMPRESAS Rodando em http://localhost:3000")
 })

@@ -1,13 +1,13 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema(
-    {
-        nome: { type: String, required: true },
-        descrição: { type: String, required: true },
-        salário: { type: Number, required: true }
-    }
+  {
+    nome: { type: String, required: true },
+    descricao: { type: String, required: true },
+    salario: { type: Number, required: true }
+  }
 )
 
 const CargoModel = mongoose.model('Cargos', schema)
 
-module.exprorts = CargoModel;
+module.exports = CargoModel

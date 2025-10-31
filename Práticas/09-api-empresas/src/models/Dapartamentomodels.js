@@ -1,12 +1,12 @@
-const mongoosse = require('mongoose')
+const mongoose = require('mongoose')
 
-const shema = new mongoosse.Schema(
-    {
-        nome: { type: String, required: true },
-        descrição: { type: String, required: true }
-    }
+const schema = new mongoose.Schema(
+  {
+    nome: { type: String, required: true },
+    descricao: { type: String, required: true }
+  }
 )
 
-const DepartamentoModel = mongoose.model('departamentos', shema)
+const DepartamentoModel = mongoose.model('Departamentos', schema)
 
 module.exports = DepartamentoModel
