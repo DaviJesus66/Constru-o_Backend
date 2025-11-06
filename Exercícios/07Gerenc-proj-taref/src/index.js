@@ -23,7 +23,6 @@ mongoose.connect(url)
   })
 
 // rotas
-
 const CargoController = require('./controllers/CargoController');
 app.use(CargoController);
 
