@@ -1,40 +1,42 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
-const DepartamentoModel = require('../models/DepartamentoModel')
-const { validarDepartamento } = require('../validators/DepartamentoValidator')
+const DepartamentoModel = require('../models/DepartamentoModel');
+const { validarId } = require('../validators/IDValidator');
+const { validarDepartamento, validarDepartamentoAtualizacao } = require('../validators/DepartamentoValidator');
 
-// crud
-router.get('/departamentos', async (req, res, next) => {
-  const departamentos = await DepartamentoModel.find()
-  res.json(departamentos)
-})
+router.get('/departamentos', async (req, res) => {
+  const departamentos = await DepartamentoModel.find();
+  res.json(departamentos);
+});
 
-router.get('/departamentos/:id', async (req, res, next) => {
-  const departamentoEncontrado = await DepartamentoModel.findById(req.params.id)
-  if (!departamentoEncontrado) {
-    return res.status(404).json({ erro: "Não encontrado" })
+router.get('/departamentos/:id', validarId, async (req, res) => {
+  const departamento = await DepartamentoModel.findById(req.params.id);
+  if (!departamento) {
+    return res.status(404).json({ message: 'Departamento não econtrado!' });
   }
-  res.json(departamentoEncontrado)
-})
+  res.json(departamento);
+});
 
-router.post('/departamentos', validarDepartamento, async (req, res, next) => {
-  const departamentoCriado = await DepartamentoModel.create(req.body)
-  res.status(201).json(departamentoCriado)
-})
+router.post('/departamentos', validarDepartamento, async (req, res) => {
+  const novoDepartamento = await DepartamentoModel.create(req.body);
+  res.status(201).json(novoDepartamento);
+});
 
-router.put('/departamentos/:id', validarDepartamento, async (req, res, next) => {
-  const departamentoAtualizado = await DepartamentoModel.findByIdAndUpdate(
-    req.params.id, req.body, { new: true })
-  if (!departamentoAtualizado) {
-    return res.status(404).json({ erro: "Não encontrado" })
+router.put('/departamentos/:id', validarId, validarDepartamentoAtualizacao, async (req, res) => {
+  const updatedDepartamento = await DepartamentoModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  if (!updatedDepartamento) {
+    return res.status(404).json({ message: 'Departamento não econtrado!' });
   }
-  res.json(departamentoAtualizado)
-})
+  res.json(updatedDepartamento);
+});
 
-router.delete('/departamentos/:id', async(req, res, next) => {
-  await DepartamentoModel.findByIdAndDelete(req.params.id)
-  res.status(204).send()
-})
+router.delete('/departamentos/:id', validarId, async (req, res) => {
+  const deletedDepartamento = await DepartamentoModel.findByIdAndDelete(req.params.id);
+  if (!deletedDepartamento) {
+    return res.status(404).json({ message: 'Departamento não econtrado!' });
+  }
+  res.status(204).send();
+});
 
-module.exports = router
+module.exports = router;

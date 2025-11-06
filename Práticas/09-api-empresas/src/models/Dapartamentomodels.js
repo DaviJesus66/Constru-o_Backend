@@ -1,12 +1,10 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const schema = new mongoose.Schema(
-  {
-    nome: { type: String, required: true },
-    descricao: { type: String, required: true }
-  }
-)
+const schema = new mongoose.Schema({
+  nome: { type: String, required: true },
+  descricao: { type: String, required: true },
+}, {
+  timestamps: true,
+});
 
-const DepartamentoModel = mongoose.model('Departamentos', schema)
-
-module.exports = DepartamentoModel
+module.exports = mongoose.model('Departamentos', schema);
