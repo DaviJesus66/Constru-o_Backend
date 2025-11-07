@@ -1,59 +1,44 @@
-const Tarefa = require('../models/TarefaModel');
+const express = require('express');
+const router = express.Router();
 
-module.exports = {
-  async create(req, res) {
-    try {
-      const tarefa = await Tarefa.create(req.body);
-      res.status(201).json(tarefa);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  },
+const schema = new mongoose.Schema
 
-  async findAll(req, res) {
-    try {
-      const tarefas = await Tarefa.find()
-        .populate('responsavel')
-        .populate('projeto');
-      res.json(tarefas);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  },
+const ProjetoModel = require('../models/ProjetoModel');
+const { validarProjeto, validarAtualizacaoProjeto } = require('../validators/ProjetoValidator');
+const { validarId } = require('../validators/IDValidator');
 
-  async findById(req, res) {
-    try {
-      const tarefa = await Tarefa.findById(req.params.id)
-        .populate('responsavel')
-        .populate('projeto');
-      if (!tarefa) return res.status(404).json({ error: 'Tarefa não encontrada' });
-      res.json(tarefa);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  },
+router.get('/Projetos', async (req, res) => {
+  const Projetos = await ProjetoModel.find().populate(['ProjetoGerente', 'ProjetoDepartamento']);
+  res.json(Projetos);
+});
 
-  async update(req, res) {
-    try {
-      const tarefa = await Tarefa.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        .populate('responsavel')
-        .populate('projeto');
-      if (!tarefa) return res.status(404).json({ error: 'Tarefa não encontrada' });
-      res.json(tarefa);
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
-  },
-
-  async delete(req, res) {
-    try {
-      const tarefa = await Tarefa.findByIdAndDelete(req.params.id);
-      if (!tarefa) return res.status(404).json({ error: 'Tarefa não encontrada' });
-      res.json({ message: 'Tarefa removida com sucesso' });
-    } catch (err) {
-      res.status(400).json({ error: err.message });
-    }
+router.get('/Projetos/:id', validarId, async (req, res) => {
+  const Projeto = await ProjetoModel.findById(req.params.id).populate(['ProjetoGerente', 'ProjetoDepartamento']);
+  if (!Projeto) {
+    return res.status(404).json({ error: 'Projeto não encontrado' });
   }
-};
+  res.json(Projetos);
+});
 
-module.exports = router;
+router.post('/Projetos', validarProjetos, async (req, res) => {
+  const novoProjeto = await ProjetoModel.create(req.body);
+  res.status(201).json(novoProjeto);
+});
+
+router.put('/Projetos/:id', validarId, validarAtualizacaoProjeto, async (req, res) => {
+  const ProjetoAtualizado = await ProjetoModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  if (!ProjetoAtualizado) {
+    return res.status(404).json({ error: 'Projeto não encontrado' });
+  }
+  res.json(ProjetoAtualizado);
+});
+
+router.delete('/Projetos/:id', validarId, async (req, res) => {
+  const ProjetoDeletado = await ProjetoModel.findByIdAndDelete(req.params.id);
+  if (!ProjetoDeletado) {
+    return res.status(404).json({ error: 'Projeto não encontrado' });
+  }
+  res.status(204).send();
+});
+
+module.exports = mongoose.model('Projeto', Schema);

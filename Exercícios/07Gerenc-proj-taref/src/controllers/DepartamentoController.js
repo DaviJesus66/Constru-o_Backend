@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const schema = new mongoose.Schema
+
 const DepartamentoModel = require('../models/DepartamentoModel');
 const { validarId } = require('../validators/IDValidator');
 const { validarDepartamento, validarDepartamentoAtualizacao } = require('../validators/DepartamentoValidator');
@@ -39,4 +41,4 @@ router.delete('/departamentos/:id', validarId, async (req, res) => {
   res.status(204).send();
 });
 
-module.exports = router;
+module.exports = mongoose.model('Departamento', Schema);

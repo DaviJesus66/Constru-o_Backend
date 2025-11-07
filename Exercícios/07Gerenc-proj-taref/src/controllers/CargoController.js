@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+const schema = new mongoose.Schema
+
+
 const CargoModel = require('../models/CargoModel');
 const { validarId } = require('../validators/IDValidator');
 const { validarCargo, validarCargoAtualizacao } = require('../validators/CargoValidator');
@@ -39,4 +42,4 @@ router.delete('/cargos/:id', validarId, async (req, res) => {
   res.status(204).send();
 });
 
-module.exports = router;
+module.exports = mongoose.model('Cargo', Schema);

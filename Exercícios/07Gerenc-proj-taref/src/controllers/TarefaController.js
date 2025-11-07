@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const schema = new mongoose.Schema
+
 const TarefaModel = require('../models/TarefaControll');
 const { validarTarefa, validarAtualizacaoTarefa } = require('../validators/TarefaValidator');
 const { validarId } = require('../validators/IDValidator');
@@ -40,4 +42,4 @@ router.delete('/tarefas/:id', async (req, res, next) => {
     res.json({ message: 'Tarefa deletada com sucesso' })
 })
 
-module.exports = router;
+module.exports = mongoose.model('Tarefa', Schema);
